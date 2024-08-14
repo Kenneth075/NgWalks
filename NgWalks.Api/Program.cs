@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using NgWalks.Api.Data;
+using NgWalks.Api.Mapping;
+using NgWalks.Api.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<NgWalksDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DbCon")));
+
+builder.Services.AddScoped<IRegionRepository, RegionRepository>();
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();
 
