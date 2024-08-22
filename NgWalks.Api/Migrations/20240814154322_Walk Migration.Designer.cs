@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NgWalks.Api.Data;
 
@@ -11,9 +12,11 @@ using NgWalks.Api.Data;
 namespace NgWalks.Api.Migrations
 {
     [DbContext(typeof(NgWalksDbContext))]
-    partial class NgWalksDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240814154322_Walk Migration")]
+    partial class WalkMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -134,6 +137,9 @@ namespace NgWalks.Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("RegionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RegionalId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("WalkImageUrl")
