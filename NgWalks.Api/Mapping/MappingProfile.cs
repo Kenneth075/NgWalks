@@ -15,6 +15,7 @@ namespace NgWalks.Api.Mapping
             CreateMap<Walk, AddWalkRequestDto>().ReverseMap();
             CreateMap<WalkDto, Walk>().ReverseMap();
             CreateMap<DifficultyDto, Difficulty>().ReverseMap();
+            CreateMap<UpdateWalkDto, Walk>().ReverseMap();
 
         }
     }

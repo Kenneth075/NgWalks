@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
+using NgWalks.Api.CustomValidation;
 using NgWalks.Api.Data;
 using NgWalks.Api.Models.Domain;
 using NgWalks.Api.Models.DTO;
@@ -11,6 +13,7 @@ namespace NgWalks.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RegionController : ControllerBase
     {
         private readonly NgWalksDbContext dbContext;
@@ -73,6 +76,7 @@ namespace NgWalks.Api.Controllers
         }
 
         [HttpPost]
+        [ValidationModel]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDtos addRegionRequestDtos)
         {
             //Map addRegionRequestDtos to Domain
@@ -104,6 +108,7 @@ namespace NgWalks.Api.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
+        [ValidationModel]
         public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] UpdateRegionRequest updateRegionRequest)
         {
             //Map Dto to domain
