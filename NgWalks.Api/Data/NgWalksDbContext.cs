@@ -5,7 +5,7 @@ namespace NgWalks.Api.Data
 {
     public class NgWalksDbContext : DbContext
     {
-        public NgWalksDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
+        public NgWalksDbContext(DbContextOptions<NgWalksDbContext> dbContextOptions) : base(dbContextOptions)
         {
             
         }

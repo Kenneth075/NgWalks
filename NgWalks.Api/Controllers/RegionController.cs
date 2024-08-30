@@ -13,8 +13,7 @@ namespace NgWalks.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
-    public class RegionController : ControllerBase
+    public class RegionController : ControllerBase 
     {
         private readonly NgWalksDbContext dbContext;
         private readonly IRegionRepository regionRepository;
@@ -28,6 +27,7 @@ namespace NgWalks.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAllAsync()
         {
             var regionDomain = await regionRepository.GetAllAsync();
@@ -52,6 +52,7 @@ namespace NgWalks.Api.Controllers
 
         [HttpGet]
         [Route("{id:guid}")]
+        [Authorize(Roles = "Reader,Writer")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             var regions = await regionRepository.GetByIdAsync(id);
@@ -77,6 +78,7 @@ namespace NgWalks.Api.Controllers
 
         [HttpPost]
         [ValidationModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDtos addRegionRequestDtos)
         {
             //Map addRegionRequestDtos to Domain
@@ -109,6 +111,7 @@ namespace NgWalks.Api.Controllers
         [HttpPut]
         [Route("{id:guid}")]
         [ValidationModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] UpdateRegionRequest updateRegionRequest)
         {
             //Map Dto to domain
@@ -146,6 +149,7 @@ namespace NgWalks.Api.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var updateDomain = await regionRepository.DeleteAsync(id);
