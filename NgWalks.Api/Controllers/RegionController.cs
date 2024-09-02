@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure.Core.Serialization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using NgWalks.Api.Data;
 using NgWalks.Api.Models.Domain;
 using NgWalks.Api.Models.DTO;
 using NgWalks.Api.Repositories;
+using System.Text.Json;
 
 namespace NgWalks.Api.Controllers
 {
@@ -16,38 +18,51 @@ namespace NgWalks.Api.Controllers
     public class RegionController : ControllerBase 
     {
         private readonly NgWalksDbContext dbContext;
+        private readonly ILogger<RegionController> logger;
         private readonly IRegionRepository regionRepository;
         private readonly IMapper mapper;
 
-        public RegionController(NgWalksDbContext dbContext, IRegionRepository regionRepository, IMapper mapper)
+        public RegionController(NgWalksDbContext dbContext, ILogger<RegionController> logger, IRegionRepository regionRepository, IMapper mapper)
         {
             this.dbContext = dbContext;
+            this.logger = logger;
             this.regionRepository = regionRepository;
             this.mapper = mapper;
         }
 
         [HttpGet]
-        [Authorize(Roles = "Reader")]
+        //[Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAllAsync()
         {
-            var regionDomain = await regionRepository.GetAllAsync();
+            try
+            {
+                logger.LogInformation("Gets all region method was invoke");
+                var regionDomain = await regionRepository.GetAllAsync();
 
-            //Map Domain Models to Dtos
-            //var regionDto = new List<RegionDto>();
-            //foreach (var region in regionDomain)
-            //{
-            //    regionDto.Add(new RegionDto
-            //    {
-            //        Id = region.Id,
-            //        Name = region.Name,
-            //        Code = region.Code,
-            //        RegionImageUrl = region.RegionImageUrl,
-            //    });
-            //}
-            var regionDto = mapper.Map<List<RegionDto>>(regionDomain);
+                //Map Domain Models to Dtos
+                //var regionDto = new List<RegionDto>();
+                //foreach (var region in regionDomain)
+                //{
+                //    regionDto.Add(new RegionDto
+                //    {
+                //        Id = region.Id,
+                //        Name = region.Name,
+                //        Code = region.Code,
+                //        RegionImageUrl = region.RegionImageUrl,
+                //    });
+                //}
+                var regionDto = mapper.Map<List<RegionDto>>(regionDomain);
 
-            return Ok(regionDto);
+                logger.LogInformation($"Getting all regions data: {JsonSerializer.Serialize(regionDto)}");
 
+                return Ok(regionDto);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message, ex.StackTrace);
+            }
+            return BadRequest();
+           
         }
 
         [HttpGet]
