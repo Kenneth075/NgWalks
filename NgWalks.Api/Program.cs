@@ -126,7 +126,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(options =>
-    {
+    { 
         foreach(var destribution in versionDestributionProvider.ApiVersionDescriptions)
         {
             options.SwaggerEndpoint($"/swagger/{destribution.GroupName}/swagger.json", destribution.GroupName.ToUpperInvariant());
