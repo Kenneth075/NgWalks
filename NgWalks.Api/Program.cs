@@ -11,7 +11,6 @@ using NgWalks.Api.Mapping;
 using NgWalks.Api.Middleware;
 using NgWalks.Api.Repositories;
 using Serilog;
-using System.Net;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);

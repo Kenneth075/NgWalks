@@ -18,7 +18,7 @@ namespace NgWalks.Api.Repositories
 
         public async Task<Image> UploadImageAsync(Image image)
         {
-            var localPathFile = Path.Combine(webHostEnvironment.ContentRootPath, "Images",$"{image.FileName}{image.FileExtension}");
+            var localPathFile = Path.Combine(webHostEnvironment.ContentRootPath, "Images", $"{image.FileName}{image.FileExtension}");
 
             //Upload Image to local Path
             using var stream = new FileStream(localPathFile, FileMode.Create);

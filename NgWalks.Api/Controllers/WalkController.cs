@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NgWalks.Api.CustomValidation;
@@ -10,6 +11,7 @@ namespace NgWalks.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class WalkController : ControllerBase
     {
         private readonly IWalkRepository walkRepository;

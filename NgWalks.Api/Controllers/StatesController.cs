@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NgWalks.Api.Models.DTO;
 using NgWalks.Api.Repositories;
 
 namespace NgWalks.Api.Controllers
 {
-    [Route("api/v{version:apiVersion}/[controller]")]
+    //[Route("api/v{version:apiVersion}/[controller]")]
+    [Route("api/v/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
     [ApiVersion("2.0")]
+    [Authorize]
     public class StatesController : ControllerBase
     {
         public StatesController()
